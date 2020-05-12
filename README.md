@@ -28,7 +28,7 @@ FitModel -h
 
 resulting in 
 
-```bash
+```
 Allowed arguments:
 
 Optional arguments:
