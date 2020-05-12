@@ -4,7 +4,7 @@
 
 * [Installation](#Installation)
 * [Usage](#Usage)
-  * [Example](#Example)
+   * [Example](#Example)
 
 ## Installation
 
