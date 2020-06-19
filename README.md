@@ -89,10 +89,15 @@ Required arguments:
 
 Whether this is a signal or a background model, it has to be defined via the option `--type`.
 
+The name of the input tree, the varables corresponding to the data to be fitted and the event weights have to be given via parameters `--input_tree`, `--input_data` and `--input_weight`.
+
 For a `--type background` model, fitting an extended novosibirsk function times a gaussian error function (extnovoeffprod) in the range `--fit_min 100` to `--fit_max 500` the command should be
 
 ```bash
 FitModel -t background_data.root \
+--input_tree mssmhbb \
+--input_data mbb \
+--input_weight weight \
 -o results/background_extnovoeff \
 --model extnovoeffprod \
 --fit_min 100 \
