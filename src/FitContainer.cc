@@ -73,7 +73,7 @@ FitContainer::FitContainer(const std::string& outputDir) :
       normChi2BkgOnly_(-10000.0),
       ndfBkgOnly_(-10000),
       nbins_(100),
-      lumi_(35.7), //2.69,12.9,36.62
+      lumi_(36.5), //2.69,12.9,36.62
       obs_(259399.), //SR1-259399, SR2-105053, SR3-26760
       type_("background"),
       weighted_(false)
@@ -141,7 +141,7 @@ FitContainer::FitContainer(const TH1* data, const std::string& outputDir, const 
 }
 
 // constructor from data, signal and background histograms
-FitContainer::FitContainer(const TH1* data, const TH1* signal, const TH1* bkg, const std::string& outputDir) :
+/*FitContainer::FitContainer(const TH1* data, const TH1* signal, const TH1* bkg, const std::string& outputDir) :
       FitContainer(outputDir)
 {
    double xmin, xmax;
@@ -205,11 +205,12 @@ FitContainer::FitContainer(const TH1* data, const TH1* signal, const TH1* bkg, c
       workspace_.import(dataContainer);
    }
 
-}
+}*/
 
 // constructor of the HistContainer that contains data, signal and background histograms
 FitContainer::FitContainer(const HistContainer& container, const std::string& outputDir) :
-      FitContainer(container.data().get(), container.bbH().get(), container.background().get(), outputDir)
+      //FitContainer(container.data().get(), container.bbH().get(), container.background().get(), outputDir)
+      FitContainer(container.data().get(), outputDir, type_)
 {
 }
 
@@ -551,9 +552,9 @@ std::unique_ptr<RooFitResult> FitContainer::modelFit(const std::string& name, co
   //generation of the new data! Please don't mix different purposes in a single class.
   //
   // Creat Asimov data for combine tool
-  RooDataSet* asimov = Pdf.generate(mbb, obs_);
-  asimov->SetName("data_obs");
-  workspace_.import(*asimov); 
+  //RooDataSet* asimov = Pdf.generate(mbb, obs_);
+  //asimov->SetName("data_obs");
+  //workspace_.import(*asimov); 
  
   // Get Covariance Matrix for diagonalisation 
   TMatrixDSymEigen CM = fitResult->covarianceMatrix();
@@ -706,7 +707,7 @@ void FitContainer::profileModel(const Type& type) {
   RooAbsData& data = *workspace_.data(data_.c_str());
   RooRealVar& mbb = *workspace_.var(mbb_.c_str());
 
-  std::unique_ptr<RooAbsReal> nll(model.createNLL(data));
+  std::unique_ptr<RooAbsReal> nll(model.createNLL(data, RooFit::Offset(kTRUE), RooFit::Optimize(kTRUE)));
   std::unique_ptr<RooArgSet> parameters(model.getParameters(mbb));
   std::unique_ptr<TIterator> iter(parameters->createIterator());
   // use raw pointer for 'parameter' because 'model' owns the object it points to:

@@ -34,7 +34,7 @@ namespace analysis {
         return "";              // to silence compiler
       };
 
-      FitContainer(const TH1* data, const TH1* signal, const TH1* background, const std::string& outputDir);
+      //FitContainer(const TH1* data, const TH1* signal, const TH1* background, const std::string& outputDir);
       FitContainer(const TH1* data, const std::string& outputDir, const std::string & type = "data");
       FitContainer(TTree& data, const std::string& outputDir, const std::string& dataleaf = "mbb", const std::string & weightleaf = "weight");
       FitContainer(const HistContainer& container, const std::string& outputDir);

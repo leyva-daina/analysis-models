@@ -46,14 +46,15 @@ void HistContainer::show() const {
 
 std::unique_ptr<TH1> HistContainer::getHistogram_(const std::string& name) const {
   TFile file(histFileName_.c_str(), "read");
-  std::string dir_name = "general";
-  std::string hist_name = "";
-  if(name == "data") hist_name = "diJet_m";
-  TDirectory *dir = (TDirectory*)file.Get((dir_name).c_str());
-  if(!file.Get((dir_name).c_str())) return nullptr;
-  std::unique_ptr<TH1> hist = staticCastUnique<TH1>(dir->Get((hist_name).c_str())->Clone(name.c_str()));
+  //std::string dir_name = "general";  		//add if there is directory
+  std::string hist_name = "mbb";
+  //if(name == "data") hist_name = "diJet_m";	//old version
+  //TDirectory *dir = (TDirectory*)file.Get((dir_name).c_str());
+  //if(!file.Get((dir_name).c_str())) return nullptr;
+  std::unique_ptr<TH1> hist = staticCastUnique<TH1>(file.Get((hist_name).c_str())->Clone(name.c_str()));
   if(!hist) return nullptr;
- 
+
+  hist->Rebin(50); 
   hist->SetDirectory(0);
   file.Close();
   if (hist->GetSumw2N() == 0) hist->Sumw2();
