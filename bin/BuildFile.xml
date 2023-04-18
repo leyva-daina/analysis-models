@@ -15,5 +15,5 @@
 
 <!-- <bin name="FitBackgroundModel" file="FitBackgroundModel.cc" /> -->
 <bin name="CreateInput_13TeV" file="CreateInput_13TeV.cc" />
-<bin name="FTest"file="../test/FTest_test.cpp" />
+<bin name="FTest" file="../test/FTest_test.cpp" />
 <bin name="FitModel" file="FitModel.cc" />
