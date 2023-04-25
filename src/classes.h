@@ -12,10 +12,10 @@
 #include "Analysis/Models/interface/RooSuperNovosibirsk.h"
 #include "Analysis/Models/interface/RooPolyDijet.h"
 #include "Analysis/Models/interface/RooSuperDiJet.h"
-
+#include "Analysis/Models/interface/RooPoly2WithShift.h"
 
 //  for backward compatibility
-//  don´t add anything below
+//  donï¿½t add anything below
 //  eventually remove all that
 #include "Analysis/Models/interface/2016/RooDoubleCB.h"
 #include "Analysis/Models/interface/2016/RooExpGausExp.h"

@@ -13,6 +13,7 @@
   <class name="analysis::models::RooSuperNovosibirsk" />
   <class name="analysis::models::RooPolyDijet" />
   <class name="analysis::models::RooSuperDiJet" />
+  <class name="analysis::models::RooPoly2WithShift" />
 <!-- for backward compatibility -->
   <class name="analysis::backgroundmodel::RooDoubleCB" />
   <class name="analysis::backgroundmodel::RooExpGausExp" />
