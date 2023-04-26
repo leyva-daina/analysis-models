@@ -13,6 +13,7 @@
 #include "Analysis/Models/interface/RooPolyDijet.h"
 #include "Analysis/Models/interface/RooSuperDiJet.h"
 #include "Analysis/Models/interface/RooPoly2WithShift.h"
+#include "Analysis/Models/interface/RooPolynomialWithShift.h"
 
 //  for backward compatibility
 //  don�t add anything below
