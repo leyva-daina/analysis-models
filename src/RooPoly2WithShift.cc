@@ -40,15 +40,6 @@ TObject* RooPoly2WithShift::clone(const char* newname) const {
 
 
 double RooPoly2WithShift::evaluate() const {
-//  double std = (x_ - mean_) / sigma_;
-//  double result = 0.0;
-//
-//  if (std <= right_) {
-//    result = std::exp(-0.5 * std::pow(std, 2));
-//  } else {
-//    result = std::exp(0.5*right_*right_ - right_*std);
-//  }
-
 	double result = 1+linear_*(x_-x0_)+quadratic_*(x_-x0_)*(x_-x0_);
 
 	return result;
