@@ -15,6 +15,8 @@
   <class name="analysis::models::RooSuperDiJet" />
   <class name="analysis::models::RooPoly2WithShift" />
   <class name="analysis::models::RooPolynomialWithShift" />
+  <class name="analysis::models::RooExpPol" />
+  <class name="analysis::models::RooExpLog" />
 <!-- for backward compatibility -->
   <class name="analysis::backgroundmodel::RooDoubleCB" />
   <class name="analysis::backgroundmodel::RooExpGausExp" />

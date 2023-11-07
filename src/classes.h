@@ -14,6 +14,8 @@
 #include "Analysis/Models/interface/RooSuperDiJet.h"
 #include "Analysis/Models/interface/RooPoly2WithShift.h"
 #include "Analysis/Models/interface/RooPolynomialWithShift.h"
+#include "Analysis/Models/interface/RooExpPol.h"
+#include "Analysis/Models/interface/RooExpLog.h"
 
 //  for backward compatibility
 //  don�t add anything below
