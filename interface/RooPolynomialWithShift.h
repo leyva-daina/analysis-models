@@ -13,6 +13,7 @@ namespace analysis {
 
     class RooPolynomialWithShift : public RooAbsPdf {
     public:
+      inline RooPolynomialWithShift() = default;
       RooPolynomialWithShift(const char *name, const char *title,
                              RooAbsReal& x, const RooArgList& coefList, RooAbsReal& x0, Int_t lowestOrder=1) ;
       RooPolynomialWithShift(const RooPolynomialWithShift& other, const char* name=0) ;

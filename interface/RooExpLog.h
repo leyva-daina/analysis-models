@@ -13,6 +13,7 @@ namespace analysis {
 
     class RooExpLog : public RooAbsPdf {
     public:
+      inline RooExpLog() = default;
       RooExpLog(const char *name, const char *title,
                              RooAbsReal& x,
                              RooAbsReal& steepness,

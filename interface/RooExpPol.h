@@ -13,6 +13,7 @@ namespace analysis {
 
     class RooExpPol : public RooAbsPdf {
     public:
+      inline RooExpPol() = default;
       RooExpPol(const char *name, const char *title,
                              RooAbsReal& x, const RooArgList& coefList, RooAbsReal& x0, Int_t lowestOrder=1) ;
       RooExpPol(const RooExpPol& other, const char* name=0) ;
