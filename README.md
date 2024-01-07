@@ -1,10 +1,10 @@
-# Analysis/Models
+# Analysis/Models Model-Interpretation branch
 
-**Mini-framework to study possible parameterizations of background and signal**
+** This is an update on the MSSM Hbb Analysis-Models mini-framework (see [analysis-models](https://github.com/desy-cms/analysis-models)) to include MSSM and 2HDM model interpretations. The latter is an adaptation of the codes from [ShevchenkoRostyslav](https://github.com/ShevchenkoRostyslav/analysis/tree/myCodes/Analysis/MssmHbb/macros/limits) and [pasmuss](https://github.com/pasmuss/analysis-combine/tree/master/AnalysisLimits/PlottingTools).
 
 * [Installation](#Installation)
 * [Usage](#Usage)
-   * [Example](#Example)
+   * [MSSM](###Interpretations in MSSM scenarios)
 
 ## Installation
 
@@ -13,105 +13,20 @@ In a CMSSW workarea
 ```bash
 cd CMSSW_X_Y_Z/src
 cmsenv
-git clone https://github.com/desy-cms/analysis-models.git Analysis/Models
+git clone https://github.com/leyva-daina/analysis-models.git Analysis/Models
 scram b -j4
 hash -r
 ```
 
 ## Usage
+See main [analysis-models](https://github.com/desy-cms/analysis-models) documentation for instructions on parameterizations of background for MSSM Hbb analysis.
 
-After the installation of the package you should have the main executable called `FitModel`. The available options can be found by running 
+See below instructions to generate model interpretations on MSSM and 2HDM scenarios:
 
-```bash
-FitModel -h
-```
+### Interpretations in MSSM scenarios
+13 TeV cross sections are provided by the [LHCHWG](https://twiki.cern.ch/twiki/bin/view/LHCPhysics/LHCHWGMSSMNeutral#ROOT_histograms_2018_and_beyond) in rootfiles, one per benchmark scenario.
+To translate your model-independant limits in the cross-section times BR to the tanB vs. mA parameter space use macro [plotTanBetaLimits.cpp]().
 
-resulting in 
-
-```
-Allowed arguments:
-
-Optional arguments:
-  -h [ --help ]                         Produce help message.
-  -v [ --verbose ] arg (=0)             More verbose output.
-  -p [ --profile ]                      Create profile likelihoods of the fit 
-                                        parameters.
-  -l [ --list_parameters ]              List parameters of the chosen fit 
-                                        models and exit.
-  -i [ --input_file ] arg               ROOT file from which input histograms 
-                                        are retrieved.
-  -t [ --input_tree_file ] arg          ROOT file from which input tree is 
-                                        retrieved. If this parameter is not 
-                                        given a binned fit is performed using 
-                                        'input_file'.
-  --input_data arg                      Name of data leaf in the input tree
-  --input_weight arg                    Name of weight leaf in the input tree
-  --input_tree arg                      Name of the input tree
-  -o [ --output_directory ] arg (=fitmodel_output/)
-                                        Directory where the output is stored.
-  --fit_min arg                         Lower bound of the fit range.
-  --fit_max arg                         Upper bound of the fit range.
-  --nbins arg                           Number of bins in the fit range.
-  --weighted                            If events are weighted
-  -m [ --modify_param ] arg             Modify parameters as follows: "name: 
-                                        [start=<value>,] [min=<value>,] 
-                                        [max=<value>,] [constant,] [floating]"
-
-Required arguments:
-  --type arg                            signal or background
-  --model arg                           Name of the model (novosibirsk, 
-                                        novopsprod, novoeffprod, 
-                                        novoefffixprod, novopshighMpol4, 
-                                        crystalball, crystalpsprod, 
-                                        crystaleffprod, cbeffprod, expeffprod, 
-                                        doublecb, dijetv1, dijetv1psprod, 
-                                        dijetv2, dijetv2psprod, dijetv3, 
-                                        dijetv3effprod, dijetv3logprod, 
-                                        dijetv4, dijetv4logprod, expgausexp, 
-                                        gausexp, doublegausexp, triplegausexp, 
-                                        gausexppsprod, gausexpeffprod, 
-                                        doublegausexpeffprod, expbwexp, bukin, 
-                                        bukinpsprod, bernstein, chebychev, 
-                                        berneffprod, bernefffixprod, 
-                                        bernpsprod, chebeffprod, breitwigner, 
-                                        mynovosibirsk, mynovopsprod, 
-                                        extnovosibirsk, extnovopsprod, 
-                                        extnovoeffprod, extnovoefffixprod, 
-                                        extnovologprod, extnovoextlogprod, 
-                                        extnovohypertanprod, relbreitwigner, 
-                                        doublegausexp, quadgausexp, 
-                                        supernovosibirsk, supernovoeffprod, 
-                                        superdijet, superdijeteffprod, 
-                                        superdijetlinearprod).
-```
-
-### Example
-
-Whether this is a signal or a background model, it has to be defined via the option `--type`.
-
-The name of the input tree, the varables corresponding to the data to be fitted and the event weights have to be given via parameters `--input_tree`, `--input_data` and `--input_weight`.
-
-For a `--type background` model, fitting an extended novosibirsk function times a gaussian error function (extnovoeffprod) in the range `--fit_min 100` to `--fit_max 500` the command should be
-
-```bash
-FitModel -t background_data.root \
---input_tree mssmhbb \
---input_data mbb \
---input_weight weight \
--o results/background_extnovoeff \
---model extnovoeffprod \
---fit_min 100 \
---fit_max 500 \
---nbins 80 \
--m "peak: start=150, min=50, max=300" \
--m "width: start=54" \
--m "tail: start=-0.4" \
--m "par4: start=-0.0006" \
--m "turnon_novoeff: start=90, min=10, max=650" \
--m "slope_novoeff: start=0.02" \
---type background
-```
-
-where the number of bins of the output histogram is `--nbins 80`, and the initial parameters of the function and validity regions of the parameters are defined by the options `-m "par: start=x", min=y, max=z"`.
-
-The results are stored in the `results/background_extnovoeff` directory defined by the `-o [ --output_directory ]` option
+### Interpretations in 2HDM scenarios
+Cross sections for type 2 and flipped scenarios, obtained with the SUSHi framework at 13 TeV, can be found in /afs/desy.de/user/l/leyvaped/public/2HDM/
+To translate your model-independant limits in the cross-section times BR to the tanB vs. mA (tanB vs cos(b-a)) parameter space use macro [Plot2HDM_mA_tanB.cpp]() ([Plot2HDM_cosBA_tanB.cpp]()).
