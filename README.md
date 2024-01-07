@@ -4,7 +4,6 @@
 
 * [Installation](#Installation)
 * [Usage](#Usage)
-   * [MSSM](#Interpretations in MSSM scenarios)
 
 ## Installation
 
@@ -25,8 +24,10 @@ See below instructions to generate model interpretations on MSSM and 2HDM scenar
 
 ### Interpretations in MSSM scenarios
 13 TeV cross sections are provided by the [LHCHWG](https://twiki.cern.ch/twiki/bin/view/LHCPhysics/LHCHWGMSSMNeutral#ROOT_histograms_2018_and_beyond) in rootfiles, one per benchmark scenario.
-To translate your model-independant limits in the cross-section times BR to the tanB vs. mA parameter space use macro [plotTanBetaLimits.cpp]().
+
+To translate your model-independant limits in the cross-section times BR to the tanB vs. mA parameter space use macro [plotTanBetaLimits.cpp](https://github.com/leyva-daina/analysis-models/blob/mssm-2hdm_model_interpretation/test/ModelInterpretation/plotTanBetaLimits.cpp).
 
 ### Interpretations in 2HDM scenarios
-Cross sections for type 2 and flipped scenarios, obtained with the SUSHi framework at 13 TeV, can be found in /afs/desy.de/user/l/leyvaped/public/2HDM/
-To translate your model-independant limits in the cross-section times BR to the tanB vs. mA (tanB vs cos(b-a)) parameter space use macro [Plot2HDM_mA_tanB.cpp]() ([Plot2HDM_cosBA_tanB.cpp]()).
+Cross sections for type 2 and flipped scenarios, obtained with the SUSHi framework at 13 TeV, can be found in `/afs/desy.de/user/l/leyvaped/public/2HDM/`.
+
+To translate your model-independant limits in the cross-section times BR to the tanB vs. mA (tanB vs cos(b-a)) parameter space use macro [Plot2HDM_mA_tanB.cpp](https://github.com/leyva-daina/analysis-models/blob/mssm-2hdm_model_interpretation/test/ModelInterpretation/Plot2HDM_mA_tanB.cpp) ([Plot2HDM_cosBA_tanB.cpp](https://github.com/leyva-daina/analysis-models/blob/mssm-2hdm_model_interpretation/test/ModelInterpretation/Plot2HDM_cosBA_tanB.cpp)).

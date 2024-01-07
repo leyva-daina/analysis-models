@@ -9,6 +9,7 @@
  *  value of cos(beta-alpha)
  */
 
+ // Modified by leyva-daina on Dec 2023
 
 #include <iostream>
 #include <string>
