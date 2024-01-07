@@ -4,7 +4,7 @@
 
 * [Installation](#Installation)
 * [Usage](#Usage)
-   * [MSSM](##Interpretations in MSSM scenarios)
+   * [MSSM](#Interpretations in MSSM scenarios)
 
 ## Installation
 
