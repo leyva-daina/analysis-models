@@ -1,5 +1,13 @@
 #include "Analysis/Models/interface/utilLib.h"
 
+bool is_empty(std::ifstream& pFile)
+{
+	/*
+	 * Check whether file is empty or not
+	 */
+    return pFile.peek() == std::ifstream::traits_type::eof();
+}
+
 bool findStrings(const std::string & input, const std::string & needful)
 {
 	std::string input1 = input;
@@ -51,9 +59,18 @@ void CheckOutputDir(const std::string& oDir){
 	 * Function to check an output path
 	 * and create a dir if doesn't exist
 	 */
-	boost::filesystem::path opath(oDir);
-	if(!boost::filesystem::exists(opath)) {
-		std::cout << "Creating output directory : " << oDir << std::endl;
-		boost::filesystem::create_directory(opath);
+	try {
+		boost::filesystem::path opath(oDir);
+		if(!boost::filesystem::exists(opath)) {
+			boost::filesystem::create_directory(opath);
+			std::cout << "Creating output directory : " << oDir << std::endl;
+		}
+	}
+	catch (const boost::filesystem::filesystem_error& e){
+		//If folder doesn't exist - go one higher and try it
+		std::string parent_folder = oDir.std::string::substr(0,oDir.find_last_of('/'));
+		if(oDir[oDir.length()] == '/')  parent_folder = oDir.std::string::substr(0,oDir.find_last_of("/"));
+		CheckOutputDir(parent_folder);
+		CheckOutputDir(oDir);
 	}
 }

@@ -1,10 +1,11 @@
 
-#ifndef Analysis_Models_utilLib_h_
-#define Analysis_Models_utilLib_h_
+#ifndef MSSMHBB_INTERFACE_UTILLIB_H_
+#define MSSMHBB_INTERFACE_UTILLIB_H_
 
 #include <sys/stat.h>
 
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <iomanip>
 #include <string>
@@ -15,7 +16,6 @@
 
 #include "RooFit.h"
 #include "RooWorkspace.h"
-
 
 //include boost
 #include <boost/filesystem.hpp>
@@ -74,8 +74,10 @@ template <typename T> T* GetFromTFile(TFile& file, const std::string& obj_name){
 template <typename T> T* GetFromTFile(const std::string& file_name, const std::string& obj_name){
 	TFile f(file_name.c_str(),"READ");
 	CheckZombie(f);
-	auto *obj =  GetFromTFile<T>(f,obj_name);
+	auto *obj =  static_cast<T*>(GetFromTFile<T>(f,obj_name));
 	return obj;
 }
+
+bool is_empty(std::ifstream& pFile);
 
 #endif
