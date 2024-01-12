@@ -132,7 +132,8 @@ int Plot2HDM_cosBA_tanB(){
 			leg.Clear();
 			output += "_zoomed";
 //			limits.setXMin(-0.8); limits.setYMin(1);
-			limits.setXMax(0.8); limits.setYMax(50);
+			limits.setXMin(-0.5); limits.setXMax(0.5);
+			limits.setYMin(4);
 			// plot zoomed cos(b-a) range
 			if(thdm_type == "type2"){
 				if(Azh_result == "1502.04478"){
