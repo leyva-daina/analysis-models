@@ -12,15 +12,17 @@ In a CMSSW workarea
 ```bash
 cd CMSSW_X_Y_Z/src
 cmsenv
-git clone https://github.com/leyva-daina/analysis-models.git Analysis/Models
+git clone -b mssm-2hdm_model_interpretation https://github.com/leyva-daina/analysis-models.git Analysis/Models
 scram b -j4
 hash -r
 ```
+For the Run 2 legacy model interpretation one can use CMSSW_11_3_4 (note that might be different than running the mssm-hbb analysis)
+
 
 ## Usage
 See main [analysis-models](https://github.com/desy-cms/analysis-models) documentation for instructions on parameterizations of background for MSSM Hbb analysis.
 
-See below instructions to generate model interpretations on MSSM and 2HDM scenarios:
+Below are instructions to generate model interpretations on MSSM and 2HDM scenarios:
 
 ### Interpretations in MSSM scenarios
 13 TeV cross sections are provided by the [LHCHWG](https://twiki.cern.ch/twiki/bin/view/LHCPhysics/LHCHWGMSSMNeutral#ROOT_histograms_2018_and_beyond) in rootfiles, one per benchmark scenario.
