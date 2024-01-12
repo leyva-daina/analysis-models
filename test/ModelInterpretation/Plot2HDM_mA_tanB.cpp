@@ -71,7 +71,6 @@ int Plot2HDM_mA_tanB(){
 	for(const auto& l: limits.getGxBrLimits()) cout<<"GxBR M: "<<l.getX()<<" exp = "<<l.getMedian()<<" +1G = "<<l.getPlus1G()<<" -1G = "<<l.getMinus1G()<<" +2G = "<<l.getPlus2G()<<" -2G = "<<l.getMinus2G()<<" Obs = "<<l.getObserved()<<endl;
 	for(const auto& l: thdmLim) cout<<"M: "<<l.getX()<<" exp = "<<l.getMedian()<<" +1G = "<<l.getPlus1G()<<" -1G = "<<l.getMinus1G()<<" +2G = "<<l.getPlus2G()<<" -2G = "<<l.getMinus2G()<<" Obs = "<<l.getObserved()<<endl;
 	limits.compareWithPrevious(Azh_result);
-	limits.compareWithPrevious("HIG-16-018");
 
 	// 2HDM tanBeta vs mA limits for cos(beta-alpha) = cB_A
 	//TLegend leg_2HDM_tB(0.65,0.17,0.92,0.44);
