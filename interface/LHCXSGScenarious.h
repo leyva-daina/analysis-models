@@ -78,7 +78,7 @@ namespace analysis {
     class mhmodp_200 : public LHCXSGScenario{
     public:
       mhmodp_200();
-      std::string getLabel() const {return "m_{h}^{mod+} scenario,  #mu = +200 GeV";}
+      std::string getLabel() const {return "m_{h}^{mod+} scenario,  #mu = +200 GeV             ";}
       std::vector<TGraph> getPreviousResults(const std::string& PAS) const;
       TText getPreviousResultsLabel(const std::string& PAS) const;
       std::vector<TGraph> getPreviousResults(const std::string& var,const std::string& PAS) const {std::vector<TGraph> gr; return gr;}
@@ -155,7 +155,7 @@ namespace analysis {
     class type2 : public Scenario{
     public:
       type2();
-      std::string getLabel() const {return "2HDM type-II scenario";}
+      std::string getLabel() const {return "Type-II 2HDM                        ";}
       std::vector<TGraph> getPreviousResults(const std::string& PAS) const {std::vector<TGraph> gr; return gr;}
       TText getPreviousResultsLabel(const std::string& PAS) const {TText tx; return tx;}
       std::vector<TGraph> getPreviousResults(const std::string& var,const std::string& PAS) const;
@@ -166,7 +166,7 @@ namespace analysis {
     class flipped : public Scenario{
     public:
       flipped();
-      std::string getLabel() const {return "2HDM flipped scenario";}
+      std::string getLabel() const {return "Flipped 2HDM                        ";}
       std::vector<TGraph> getPreviousResults(const std::string& PAS) const {std::vector<TGraph> gr; return gr;}
       TText getPreviousResultsLabel(const std::string& PAS) const {TText tx; return tx;}
       std::vector<TGraph> getPreviousResults(const std::string& var,const std::string& PAS) const;
@@ -177,7 +177,7 @@ namespace analysis {
     class mh125 : public LHCXSGScenario{
     public:
       mh125();
-      std::string getLabel() const {return "M_{h}^{125} scenario";}
+      std::string getLabel() const {return "M_{h}^{125} scenario (#mu = #plus1 TeV)";}
       std::vector<TGraph> getPreviousResults(const std::string& PAS) const;
       TText getPreviousResultsLabel(const std::string& PAS) const;
       std::vector<TGraph> getPreviousResults(const std::string& var,const std::string& PAS) const {std::vector<TGraph> gr; return gr;}
@@ -188,7 +188,7 @@ namespace analysis {
     class negmu1 : public LHCXSGScenario{
     public:
       negmu1();
-      std::string getLabel() const {return "M_{h}^{125} (#mu=-1TeV)";}
+      std::string getLabel() const {return "M_{h}^{125} (#mu = #minus1 TeV)";}
       std::vector<TGraph> getPreviousResults(const std::string& PAS) const;
       TText getPreviousResultsLabel(const std::string& PAS) const;
       std::vector<TGraph> getPreviousResults(const std::string& var,const std::string& PAS) const {std::vector<TGraph> gr; return gr;}
@@ -199,7 +199,7 @@ namespace analysis {
     class negmu2 : public LHCXSGScenario{
     public:
       negmu2();
-      std::string getLabel() const {return "M_{h}^{125} (#mu=-2TeV)";}
+      std::string getLabel() const {return "M_{h}^{125} (#mu = #minus2 TeV)";}
       std::vector<TGraph> getPreviousResults(const std::string& PAS) const;
       TText getPreviousResultsLabel(const std::string& PAS) const;
       std::vector<TGraph> getPreviousResults(const std::string& var,const std::string& PAS) const {std::vector<TGraph> gr; return gr;}
@@ -210,7 +210,7 @@ namespace analysis {
     class negmu3 : public LHCXSGScenario{
     public:
       negmu3();
-      std::string getLabel() const {return "M_{h}^{125} (#mu=-3TeV)";}
+      std::string getLabel() const {return "M_{h}^{125} (#mu = #minus3 TeV)";}
       std::vector<TGraph> getPreviousResults(const std::string& PAS) const;
       TText getPreviousResultsLabel(const std::string& PAS) const;
       std::vector<TGraph> getPreviousResults(const std::string& var,const std::string& PAS) const {std::vector<TGraph> gr; return gr;}

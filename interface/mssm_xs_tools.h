@@ -432,14 +432,14 @@ class mssm_xs_tools{
   /// get cross section for production of h in gluon-gluon fusion (in pb)
   double ggH_h(double mphi, double tanb){ return xsec("gg->h", mphi, tanb); }
   /// get cross section for production of A in association with b quarks (in pb)
-  //double bbH_A(double mphi, double tanb){ return xsec("bb->A", mphi, tanb); }//mh125
-  double bbH_A(double mphi, double tanb){ return xsec("bb5F->A", mphi, tanb); }//mhmodp and hMSSM
+  double bbH_A(double mphi, double tanb){ return xsec("bb->A", mphi, tanb); }//mh125
+  //double bbH_A(double mphi, double tanb){ return xsec("bb5F->A", mphi, tanb); }//mhmodp and hMSSM
   /// get cross section for production of H in association with b quarks (in pb)
- // double bbH_H(double mphi, double tanb){ return xsec("bb->H", mphi, tanb); }//mh125
-  double bbH_H(double mphi, double tanb){ return xsec("bb5F->H", mphi, tanb); }//mhmodp and hMSSM
+  double bbH_H(double mphi, double tanb){ return xsec("bb->H", mphi, tanb); }//mh125
+  //double bbH_H(double mphi, double tanb){ return xsec("bb5F->H", mphi, tanb); }//mhmodp and hMSSM
   /// get cross section for production of h in association with b quarks (in pb)
-  //double bbH_h(double mphi, double tanb){ return xsec("bb->h", mphi, tanb); }//mh125
-  double bbH_h(double mphi, double tanb){ return xsec("bb5F->h", mphi, tanb); }//mhmodp and hMSSM
+  double bbH_h(double mphi, double tanb){ return xsec("bb->h", mphi, tanb); }//mh125
+  //double bbH_h(double mphi, double tanb){ return xsec("bb5F->h", mphi, tanb); }//mhmodp and hMSSM
   //non-CPV and CPV
   /// get cross section for production of H+ directly from proton-proton collision (in pb)
   double pp_Hp(double mphi, double tanb){ return xsec("pp->Hp", mphi, tanb); }

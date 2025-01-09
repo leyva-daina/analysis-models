@@ -338,7 +338,8 @@ void CMS_lumi::drawCMSLatex(TLatex& latex, TString& extraText, const int& iPosX,
     }
   }
   else if( drawExtraText ){
-    latex.SetTextFont(extraTextFont_);
+    //latex.SetTextFont(extraTextFont_);
+    latex.SetTextFont(52);
     latex.SetTextSize(extraTextSize*t);
     latex.SetTextAlign(align_);
     latex.DrawLatex(posX + CMS_latex_width, posY, extraText);

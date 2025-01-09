@@ -59,40 +59,43 @@ using namespace std;
 using namespace analysis::mssmhbb;
 using namespace mssmhbb;
 
-int Plot2HDM_cosBA_tanB(){
+void Plot2HDM_cosBA_tanB_aux(double mass_){
 
 	PublicationStatus status = publication_status;
 	status = PUBLIC;
 	style.setTDRstyle(status);
 	//Prefix to the output
-	string output_prefix = "13TeV_limits";
+	string output_prefix = "13TeV_limits"; //checkme
 	//AtoZh results
 	string Azh_result = "HIG-18-005";//"1502.04478";//"ATLAS-CONF-2017-055"
 	//paths with results of the combine tool
-	string path2018FH = "/nfs/dust/cms/user/leyvaped/Analyses/MSSM/FullRun2/Combine/April_2023/CMSSW_11_3_4/src/Analysis/Combine/Run2018/Inputs_Unc/datacards/Hbb.limits";
+	//string path2018FH = "/nfs/dust/cms/user/leyvaped/Analyses/MSSM/FullRun2/Combine/April_2023/CMSSW_11_3_4/src/Analysis/Combine/Run2018/Inputs_Unc/model-interpretation/files2017SL/Datacards_SL/Hbb.limits";
+  	string path2018FH  	 = "/afs/desy.de/user/l/leyvaped/public/paths_limits_theoryUncertainty_UNBLINDED/limits_afs.txt";
 	//value of fixed mass
-	double mass = 300;
+	double mass = mass_; // CHECKME
 	//Details of the 2HDM produciton
 	string thdm_production = "FullRun_100PerJob_AllTypesAndBosons";
+
 	// type of the 2hdm: type2 or flipped(type3)
-	string thdm_type = "type2"; string banch_name;
+	string thdm_type = "flipped"; string banch_name;// CHECKME
+	
 	if(thdm_type == "type2")  banch_name = "type2";
 	if(thdm_type == "flipped") banch_name = "type3";
 	else if (thdm_type == "lepton_specific") banch_name = "type4";
 	AvailableScenarios scenario = AvailableScenariosFromString(thdm_type);
 
-	string thdm_scans = "/nfs/dust/cms/user/leyvaped/Analyses/MSSM/SusHi/" + thdm_production + "/rootFiles/Histograms3D_" + banch_name + "_mA_mH.root";
+	string thdm_scans = "/afs/desy.de/user/l/leyvaped/public/paths_limits_theoryUncertainty_UNBLINDED/SusHi/Histograms3D_" + banch_name + "_mA_mH_mh.root";
 
 	//higgs boson: H/A/both/three
 	string boson = "both";
-	string output = "/nfs/dust/cms/user/leyvaped/Analyses/MSSM/FullRun2/Combine/April_2023/CMSSW_11_3_4/src/Analysis/Combine/Run2018/Inputs_Unc/model-interpretation/Results_2HDM/";
+	string output = "/afs/desy.de/user/l/leyvaped/CMSSW_11_3_4/src/Analysis/Models/test/ModelInterpretation/Results_2HDM_Combination_Unblinded_publication/";
 	CheckOutputDir(output);
 
-	THDMLimits limits(mssmhbb::blinded,boson,-1,1,1.,100);
+	THDMLimits limits(false,boson,-1,1,1.,100);
 	limits.setScenario(scenario);
 	limits.setXMax(0.95); limits.setXMin(-0.95);
 	limits.SetHiggsBoson(boson);
-	limits.ReadCombineLimits(path2018FH);
+	limits.ReadCombineLimits(path2018FH); //CHECKME
 	auto lol = limits.Get2HDM_1D_Limits(thdm_scans,mass,"x");
 
 	vector<Limit> GBR2018FH = limits.getGxBrLimits();
@@ -113,7 +116,7 @@ int Plot2HDM_cosBA_tanB(){
 	//limits.compareWithPrevious("ATLAS-CONF-2017-055");
 	if(thdm_type!="type1" && thdm_type!="type4"){
 		// plot full cos(b-a) range
-		limits.LimitPlotter(leg,output,"36.5 fb^{-1}","cos(#beta-#alpha)","tan#beta",false);
+		limits.LimitPlotter_forPublication(leg,output,"36.5 fb^{-1}","cos(#beta #minus #alpha)","tan#kern[-0.3]{ }#beta",false,std::to_string(mass));
 		if(mass == 300){
 			// plot comparison to AtoZh
 			if(Azh_result == "ATLAS-CONF-2017-055" || Azh_result == "HIG-18-005"){
@@ -144,9 +147,21 @@ int Plot2HDM_cosBA_tanB(){
 				}
 			}
 
-			limits.LimitPlotter(leg,output,"36.5 fb^{-1}","cos(#beta-#alpha)","tan#beta",true);
+			limits.LimitPlotter_forPublication(leg,output,"36.5 fb^{-1}","cos(#beta #minus #alpha)","tan#kern[-0.3]{ }#beta",true,std::to_string(mass));
 
 		}
 	}
-return 0;
+return;
+}
+
+int Plot2HDM_cosBA_tanB()
+{
+	std::vector <int> masses = {125, 130, 140, 160, 180, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1200, 1400, 1800};
+	//std::vector <int> masses = {1800};
+	for(int i = 0; i < masses.size(); i++)
+	{
+		std::cout << std::endl << "LIMITS tanB vs. cos(B-A) for mA = "<< masses[i]<<std::endl<<std::endl;
+		Plot2HDM_cosBA_tanB_aux(masses[i]);
+	}
+	return 0;
 }

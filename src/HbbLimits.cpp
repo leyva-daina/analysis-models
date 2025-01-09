@@ -104,7 +104,8 @@ namespace analysis {
       }
       HbbStyle style;
       //	gStyle->SetPadTopMargin   (0.08);
-      gStyle->SetPadLeftMargin(0.13);
+      //gStyle->SetPadLeftMargin(0.13);
+      gStyle->SetPadLeftMargin(0.14);
       gStyle->SetPadRightMargin(0.05);
       gStyle->SetPadBottomMargin(0.15);
 
@@ -143,10 +144,44 @@ namespace analysis {
       TGraphAsymmErrors * outerBand = new TGraphAsymmErrors(nPointsX, decomposed.X.data(), decomposed.median.data(), decomposed.zero.data(), decomposed.zero.data(), decomposed.minus2.data(), decomposed.plus2.data());
       style.set2SigmaBandsStyle(outerBand);
 
+     /* // Print X and Y values for each graph
+      std::ofstream outFile("mass_point_limits_m_" + std::to_string(int(var_point_)) + ".txt");
+
+      outFile << "Observed Limits:" << std::endl;
+      for (int i = 0; i < obsG->GetN(); ++i) {
+          double x, y;
+          obsG->GetPoint(i, x, y);
+          outFile << "X: " << x << ", Y: " << y << std::endl;
+      }
+
+      outFile << "Expected Limits:" << std::endl;
+      for (int i = 0; i < expG->GetN(); ++i) {
+          double x, y;
+          expG->GetPoint(i, x, y);
+          outFile << "X: " << x << ", Y: " << y << std::endl;
+      }
+
+      outFile << "Inner Band Limits:" << std::endl;
+      for (int i = 0; i < innerBand->GetN(); ++i) {
+          double x, y;
+          innerBand->GetPoint(i, x, y);
+          outFile << "X: " << x << ", Y: " << y << std::endl;
+      }
+
+      outFile << "Outer Band Limits:" << std::endl;
+      for (int i = 0; i < outerBand->GetN(); ++i) {
+          double x, y;
+          outerBand->GetPoint(i, x, y);
+          outFile << "X: " << x << ", Y: " << y << std::endl;
+      }
+
+      outFile.close();*/
+
       TH2F frame("frame","",2,xMin_,xMax_,2,yMin_,yMax_);
       style.setFrameStyle(&frame);
       frame.GetXaxis()->SetTitle(xtitle.c_str());
       frame.GetYaxis()->SetTitle(ytitle.c_str());
+      frame.GetYaxis()->SetTitleSize(0.055);
 
       TCanvas *canv = new TCanvas("canv", "histograms", 600, 600);
       auto *main_pad = new TPad("main_pad","main_pad",0,0,1,1);
@@ -165,6 +200,121 @@ namespace analysis {
       if(compare_limits) {
 	leg.AddEntry(differ_exp,differ_limits.legend.c_str(),"l");
       }
+      AddPlottingObjects(frame,leg,*obsG,*expG,*innerBand,*outerBand,*canv);
+      //	TPad * pad = (TPad*)canv->GetPad(0);
+      canv->RedrawAxis();
+      main_pad->RedrawAxis();
+      ////	leg.Draw();
+      //style.drawStandardTitle();
+
+      canv->cd();
+      if(logY) main_pad->SetLogy();
+      canv->Update();
+      canv->Print( (output+".png").c_str() ,"Portrait png") ;
+      canv->Print( (output+".pdf").c_str() ,"Portrait pdf");
+      //	canv->Print( (output+".root").c_str()) ;
+    }
+
+
+    
+    void HbbLimits::LimitPlotter_forPublication(
+				 TLegend leg,
+				 const std::string& output,
+				 const std::string& Lumi,
+				 const std::string& xtitle,
+				 const std::string& ytitle,
+				 const bool& logY,
+                         const std::string& mass_point){
+
+      std::cout<<std::endl<<" I AM HERE NEW 1"<<std::endl;
+
+      if(limits_.size() == 0) {
+	std::cerr<<"Error in HbbLimits::LimitPlotter: No limits with this name. Please check spelling";
+	exit(-1);
+      }
+      HbbStyle style;
+      //	gStyle->SetPadTopMargin   (0.08);
+      //gStyle->SetPadLeftMargin(0.13);
+      gStyle->SetPadLeftMargin(0.14);
+      gStyle->SetPadRightMargin(0.05);
+      gStyle->SetPadBottomMargin(0.15);
+
+      //Write value of limits in file
+      //	CheckOutputDir(output);
+      //	Write(output);
+
+      int nPointsX = limits_.size();
+      HbbLimits::DecomposedLimits decomposed = DecomposeLimits(limits_);
+
+      TGraph * differ_exp = nullptr;
+
+      TGraph * obsG = new TGraph(nPointsX, decomposed.X.data(), decomposed.obs.data());
+      style.setObservedLimitsStyle(obsG);
+
+      TGraph * expG = new TGraph(nPointsX, decomposed.X.data(), decomposed.median.data());
+      style.setExpectedLimitsStyle(expG);
+
+      TGraphAsymmErrors * innerBand = new TGraphAsymmErrors(nPointsX, decomposed.X.data(), decomposed.median.data(), decomposed.zero.data(), decomposed.zero.data(), decomposed.minus1.data(), decomposed.plus1.data());
+      style.set1SigmaBandsStyle(innerBand);
+
+      TGraphAsymmErrors * outerBand = new TGraphAsymmErrors(nPointsX, decomposed.X.data(), decomposed.median.data(), decomposed.zero.data(), decomposed.zero.data(), decomposed.minus2.data(), decomposed.plus2.data());
+      style.set2SigmaBandsStyle(outerBand);
+
+      // Print X and Y values for each graph
+      std::ofstream outFile("mass_point_limits_m_" + std::to_string(static_cast<int>(std::stod(mass_point))) + "_GeV.txt");
+
+      // Print in table style for Latex
+      outFile << "cosb-a    -2s     -1s  median     +1s     +2s     obs" << std::endl;
+      for (int i = 0; i < obsG->GetN(); ++i) {
+          double x, obs, median, minus1, plus1, minus2, plus2;
+          obsG->GetPoint(i, x, obs);
+          expG->GetPoint(i, x, median);
+          innerBand->GetPoint(i, x, median);
+          minus1 = median - innerBand->GetErrorYlow(i);
+          plus1 = median + innerBand->GetErrorYhigh(i);
+          outerBand->GetPoint(i, x, median);
+          minus2 = median - outerBand->GetErrorYlow(i);
+          plus2 = median + outerBand->GetErrorYhigh(i);
+          outFile << x << " & " << minus2 << " & " << minus1 << " & " << median << " & " << plus1 << " & " << plus2 << " & " << obs << " \\\\" << std::endl;
+      }
+
+      // Print in markdown format
+      outFile << "\n| cosb-a | -2s | -1s | median | +1s | +2s | obs |" << std::endl;
+      outFile << "|------|-----|-----|--------|-----|-----|-----|" << std::endl;
+      for (int i = 0; i < obsG->GetN(); ++i) {
+          double x, obs, median, minus1, plus1, minus2, plus2;
+          obsG->GetPoint(i, x, obs);
+          expG->GetPoint(i, x, median);
+          innerBand->GetPoint(i, x, median);
+          minus1 = median - innerBand->GetErrorYlow(i);
+          plus1 = median + innerBand->GetErrorYhigh(i);
+          outerBand->GetPoint(i, x, median);
+          minus2 = median - outerBand->GetErrorYlow(i);
+          plus2 = median + outerBand->GetErrorYhigh(i);
+          outFile << "| " << x << " | " << minus2 << " | " << minus1 << " | " << median << " | " << plus1 << " | " << plus2 << " | " << obs << " |" << std::endl;
+      }
+
+      outFile.close();
+
+      TH2F frame("frame","",2,xMin_,xMax_,2,yMin_,yMax_);
+      style.setFrameStyle(&frame);
+      frame.GetXaxis()->SetTitle(xtitle.c_str());
+      frame.GetYaxis()->SetTitle(ytitle.c_str());
+      frame.GetYaxis()->SetTitleSize(0.055);
+
+      TCanvas *canv = new TCanvas("canv", "histograms", 600, 600);
+      auto *main_pad = new TPad("main_pad","main_pad",0,0,1,1);
+      main_pad->Draw();
+      main_pad->cd();
+
+      frame.Draw();
+
+      style.setLegendStyle(&leg);
+
+      outerBand->Draw("3same");
+      innerBand->Draw("3same");
+      expG->Draw("lsame");
+
       AddPlottingObjects(frame,leg,*obsG,*expG,*innerBand,*outerBand,*canv);
       //	TPad * pad = (TPad*)canv->GetPad(0);
       canv->RedrawAxis();
@@ -223,7 +373,10 @@ namespace analysis {
       TGraphAsymmErrors * outerBand = new TGraphAsymmErrors(nPointsX, decomposed.X.data(), decomposed.median.data(), decomposed.zero.data(), decomposed.zero.data(), decomposed.minus2.data(), decomposed.plus2.data());
       style.set2SigmaBandsStyle(outerBand);
 
-      TH2F frame("frame","",2,xMin_,xMax_,2,yMin_,yMax_);
+      std::cout<<std::endl<<" I AM HERE 3"<<std::endl;
+
+//      TH2F frame("frame","",2,xMin_,xMax_,2,yMin_,yMax_);
+      TH2F frame("frame","",2,xMin_,xMax_,10,yMin_,yMax_);
       style.setFrameStyle(&frame);
       frame.GetXaxis()->SetTitle(xtitle.c_str());
       frame.GetYaxis()->SetTitle(ytitle.c_str());
@@ -237,17 +390,19 @@ namespace analysis {
 
       style.setLegendStyle(&leg);
 
+      std::cout<<std::endl<<" I AM HERE 4"<<std::endl;
       outerBand->Draw("3same");
       innerBand->Draw("3same");
       expG->Draw("lsame");
+      std::cout<<std::endl<<" I AM HERE 5"<<std::endl;
 
       TGraph* art_17 = new TGraph();
       art_17 -> SetLineStyle(2);
       art_17 -> SetLineColor(kGray);
 
       TGraph* art_16 = new TGraph();
-      art_16 -> SetLineStyle(2);
-      art_16 -> SetLineColor(kBlack);
+      art_16 -> SetLineStyle(9);
+      art_16 -> SetLineColor(kRed);
 
       //2016 inclusinve
 	    /*const int npoints = 9;
@@ -259,6 +414,7 @@ namespace analysis {
 	    gr_exp->SetLineColor(kCyan-3);
 	    gr_exp->Draw("lsame");
 	    leg.AddEntry(gr_exp,"2016 exp.","l");*/
+      std::cout<<std::endl<<" I AM HERE 6"<<std::endl;
 
       leg.AddEntry(art_16,"2016 Exp.","l");
       if(differ_limits == "1617CMS") leg.AddEntry(art_17,"2017 SL Exp.","l");
@@ -269,9 +425,11 @@ namespace analysis {
       main_pad->RedrawAxis();
       ////	leg.Draw();
       //style.drawStandardTitle();
+      std::cout<<std::endl<<" I AM HERE 7"<<std::endl;
 
       canv->cd();
       if(logY) main_pad->SetLogy();
+      std::cout<<std::endl<<" I AM HERE 8"<<std::endl;
       canv->Update();
       canv->Print( (output+".png").c_str() ,"Portrait png") ;
       canv->Print( (output+".pdf").c_str() ,"Portrait pdf");
@@ -500,9 +658,9 @@ namespace analysis {
 	double x [] = {300,350,400,500,600,700,900,1100,1300};
 	double y_exp [] = {19.7,11.7,6.7,3.1,1.9,1.3,0.8,0.68,0.68};
 	TGraph* gr_exp = new TGraph(npoints,x,y_exp);
-	gr_exp->SetLineStyle(2);
-	gr_exp->SetLineWidth(2);
-	gr_exp->SetLineColor(kCyan-3);
+	gr_exp->SetLineStyle(7);
+	gr_exp->SetLineWidth(1);
+	gr_exp->SetLineColor(kRed);
 	gr_exp->Draw("lsame");
 	leg.AddEntry(gr_exp,"2016 exp.","l");
 	//std::array<double,npoints> y_obs = {{19.1,14.0,5.7,1.9,2.1,1.5,0.9,0.4,0.5}};
@@ -528,7 +686,7 @@ namespace analysis {
 	TGraph* gr_exp_ATLAS = new TGraph(17,&x_ATLAS[0],&y_exp_ATLAS[0]);
 	gr_exp_ATLAS->SetLineStyle(2);
 	gr_exp_ATLAS->SetLineWidth(2);
-	gr_exp_ATLAS->SetLineColor(kBlue);
+	gr_exp_ATLAS->SetLineColor(kBlack);
 	gr_exp_ATLAS->Draw("lsame");
 	leg.AddEntry(gr_exp_ATLAS,"ATLAS exp.","l");
 	//std::array<double,npoints_17> y_obs_ATLAS = {{3.46,3.63,3.48,2.29,2.54,0.94,0.70,1.03,0.98,0.63,0.82,0.79,0.75,0.58,1.06,1.20,0.98}};

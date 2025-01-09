@@ -135,6 +135,17 @@ public:
 			const std::string& ytitle = "95%C.L. limit on #sigma(b#bar{b}A/H) x BR(A/H#rightarrow b#bar{b}) [pb]",
 			const bool& logY = false);
 
+	void LimitPlotter_forPublication(
+			TLegend leg,
+			const std::string& output = "",
+			const std::string& Lumi = "54.54 fb^{-1}",
+			const std::string& xtitle = "m_{A/H} [GeV]",
+			const std::string& ytitle = "95%C.L. limit on #sigma(b#bar{b}A/H) x BR(A/H#rightarrow b#bar{b}) [pb]",
+			const bool& logY = false,
+			const std::string& mass_point = "");
+
+
+
 	virtual void AddPlottingObjects(TH2F &frame, TLegend &leg, TGraph& obs, TGraph& exp, TGraphAsymmErrors& inner_band, TGraphAsymmErrors& outer_band, TCanvas &can);
 
 protected:

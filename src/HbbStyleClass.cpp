@@ -514,7 +514,8 @@ void HbbStyle::setObservedLimitsStyle(TGraph *obsG) {
    * Set a style for the observed limits graph
    */
   obsG->SetLineWidth(3);
-  obsG->SetLineColor(1);
+  //obsG->SetLineColor(1);
+  obsG->SetLineColor(kBlack);
   obsG->SetLineWidth(2);
   obsG->SetMarkerColor(1);
   obsG->SetMarkerStyle(20);
@@ -526,7 +527,8 @@ void HbbStyle::setExpectedLimitsStyle(TGraph *expG){
    * Set a style for the expected Limits graph
    */
   expG->SetLineWidth(3);
-  expG->SetLineColor(2);
+  //expG->SetLineColor(2);
+  expG->SetLineColor(kBlack);
   expG->SetLineStyle(2);
 }
 
@@ -534,16 +536,20 @@ void HbbStyle::set1SigmaBandsStyle(TGraph *innerBand){
   /*
    * Set a style for the 1 Sigma expected Limits band
    */
-  innerBand->SetFillColor(kGreen+1);
-  innerBand->SetLineColor(kGreen+1);
+  int fcolor = TColor::GetColor("#FFDF7Fff");
+
+  innerBand->SetFillColor(fcolor);
+  innerBand->SetLineColor(fcolor);
 }
 
 void HbbStyle::set2SigmaBandsStyle(TGraph *outerBand){
   /*
-   * Set a style for the 1 Sigma expected Limits band
+   * Set a style for the 2 Sigma expected Limits band
    */ 
-  outerBand->SetFillColor(kOrange);
-  outerBand->SetLineColor(kOrange);
+  int fcolor = TColor::GetColor("#85D1FBff");
+
+  outerBand->SetFillColor(fcolor);
+  outerBand->SetLineColor(fcolor);
 	
 }
 void HbbStyle::setFrameStyle(TH2 *frame){

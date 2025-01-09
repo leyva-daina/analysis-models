@@ -127,14 +127,15 @@ void LHCXSGLimits::AddPlottingObjects(TH2F &frame, TLegend &leg, TGraph& obs, TG
 	 */
 
 	//Modify appearence of the observed data to match 8 TeV paper
-	obs.SetLineColor(kRed);
+	//obs.SetLineColor(kRed);
+	obs.SetLineColor(kBlack);
 
 	//Shaded area with transperent borders
 	TGraph *obs_shaded = new TGraph(obs);
 	obs_shaded->SetLineColor(kWhite);
 	obs_shaded->SetLineWidth(0);
-	obs_shaded->SetFillColor(kRed-9);
-	obs_shaded->SetFillColorAlpha(kRed-9,0.35);
+	obs_shaded->SetFillColor(kGray+1);
+	obs_shaded->SetFillColorAlpha(kGray+1,0.35);
 	std::cout << "made shaded" << std::endl;
 	obs_shaded->SetPoint(obs_shaded->GetN(),xMax_,yMax_);		//Needed to make a closed area to be filled
 	obs_shaded->SetPoint(obs_shaded->GetN(),xMin_,yMax_);		//Needed to make a closed area to be filled
@@ -159,7 +160,8 @@ void LHCXSGLimits::AddPlottingObjects(TH2F &frame, TLegend &leg, TGraph& obs, TG
 		leg.AddEntry(obs_legend,"Observed","lf");
 	}
 	//Add standard legend for the limits plot
-	exp.SetLineColor(kBlue);
+	//exp.SetLineColor(kBlue);
+	exp.SetLineColor(kBlack);
 	leg.AddEntry(&exp,"Expected","l");
 	leg.AddEntry(&inner_band,"68% expected","f");
 	leg.AddEntry(&outer_band,"95% expected","f");
@@ -184,6 +186,9 @@ void LHCXSGLimits::AddPlottingObjects(TH2F &frame, TLegend &leg, TGraph& obs, TG
 		std::cout << previous_res.size() << std::endl;
 		for(auto & gr : previous_res){
 			TGraph *p_gr = new TGraph(gr);
+			p_gr->SetLineColor(kRed);
+			p_gr->SetLineWidth(1);
+			p_gr->SetLineStyle(7);
 			p_gr->Draw("Lsame");
 		}
 //		TGraph *previous_res = new TGraph(scenario_->getPreviousResults(compareWithPrevious_));
@@ -208,7 +213,7 @@ void LHCXSGLimits::AddPlottingObjects(TH2F &frame, TLegend &leg, TGraph& obs, TG
 
 	leg.Draw();
 	//In case of the long header like at mhmod+ scenario
-	if(legendHeader.length() > 30) HbbStyle::drawLegendSplittedHeader(&leg,",");
+	if(legendHeader.length() > 40) HbbStyle::drawLegendSplittedHeader(&leg,",");
 
 	HbbStyle::drawStandardTitle("out");
 	

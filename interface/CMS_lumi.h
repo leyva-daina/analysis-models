@@ -39,17 +39,21 @@ class CMS_lumi{
   float getExtraTextFont() const;
   void setExtraTextFont(const float& extraTextFont = 42);
   const TString& getLumi13TeV() const;
-  void setLumi13TeV(const TString& lumi13TeV = "54.54 fb^{-1}");
+  //void setLumi13TeV(const TString& lumi13TeV = "31.2 fb^{#minus1}"); //2017FH
+  //void setLumi13TeV(const TString& lumi13TeV = "36.7 fb^{#minus1}"); //2017SL
+  //void setLumi13TeV(const TString& lumi13TeV = "31.2-36.7 fb^{#minus1}"); //2017
+  //void setLumi13TeV(const TString& lumi13TeV = "54.54 fb^{#minus1}"); //2018
+  void setLumi13TeV(const TString& lumi13TeV = "36.7#minus126.9 fb^{#minus1}"); //2016+2017+2018
   const TString& getLumi7TeV() const;
-  void setLumi7TeV(const TString& lumi7TeV = "5.1 fb^{-1}");
+  void setLumi7TeV(const TString& lumi7TeV = "5.1 fb^{#minus1}");
   const TString& getLumi8TeV() const;
-  void setLumi8TeV(const TString& lumi8TeV = "19.7 fb^{-1}");
+  void setLumi8TeV(const TString& lumi8TeV = "19.7 fb^{#minus1}");
   const TString& getLumiSqrtS() const;
   void setLumiSqrtS(const TString& lumiSqrtS = "");
   float getLumiTextOffset() const;
   void setLumiTextOffset(const float& lumiTextOffset = 0.2);
   float getLumiTextSize() const;
-  void setLumiTextSize(const float& lumiTextSize = 0.6);
+  void setLumiTextSize(const float& lumiTextSize = 0.7);
   float getRelExtraDy() const;
   void setRelExtraDy(const float& relExtraDy = 1.2);
   float getRelPosX() const;
@@ -90,9 +94,13 @@ class CMS_lumi{
   // ratio of "CMS" and extra text size
   float extraOverCmsTextSize_  = 0.76;
 
-  TString lumi_13TeV_ = "54.54 fb^{-1}";
-  TString lumi_8TeV_  = "19.7 fb^{-1}";
-  TString lumi_7TeV_  = "5.1 fb^{-1}";
+  TString lumi_13TeV_ = "36.7#minus126.9 fb^{#minus1}"; //2016+2017+2018
+  // TString lumi_13TeV_ = "31.2 fb^{#minus1}"; //2017FH
+  // TString lumi_13TeV_ = "36.7 fb^{#minus1}"; //2017SL
+  // TString lumi_13TeV_ = "31.2-36.7 fb^{#minus1}"; //2017
+  // TString lumi_13TeV_ = "54.54 fb^{#minus1}"; //2018
+  TString lumi_8TeV_  = "19.7 fb^{#minus1}";
+  TString lumi_7TeV_  = "5.1 fb^{#minus1}";
   TString lumi_sqrtS_ = "";
 
   bool drawLogo_      = false;

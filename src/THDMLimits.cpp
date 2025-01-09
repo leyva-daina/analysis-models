@@ -400,14 +400,14 @@ namespace analysis {
        */
 
       //Modify appearence of the observed data to match 8 TeV paper
-      obs.SetLineColor(kRed);
+      obs.SetLineColor(kBlack);
 
       //Shaded area with transperent borders
       TGraph *obs_shaded = new TGraph(obs);
       obs_shaded->SetLineColor(kWhite);
       obs_shaded->SetLineWidth(0);
-      obs_shaded->SetFillColor(kRed-9);
-      obs_shaded->SetFillColorAlpha(kRed-9,0.35);
+      obs_shaded->SetFillColor(kGray+1);
+      obs_shaded->SetFillColorAlpha(kGray+1,0.35);
       obs_shaded->SetPoint(obs_shaded->GetN(),xMax_,yMax_);		//Needed to make a closed area to be filled
       obs_shaded->SetPoint(obs_shaded->GetN(),xMin_,yMax_);		//Needed to make a closed area to be filled
 
@@ -432,7 +432,8 @@ namespace analysis {
       }
 	
       //Expected limits style
-      exp.SetLineColor(kBlue);
+      ///exp.SetLineColor(kBlue);
+      exp.SetLineColor(kBlack);
 
       //Legend style
       auto legendHeader = scenario_->getLabel();
@@ -469,10 +470,12 @@ namespace analysis {
 
       HbbStyle::drawLegendOnTopOfThePad(&leg,&can,0.25);
       //Get Legend position to not lost it
-      if(legendHeader.length() > 20) {
-	std::string specific_point = "A/H#rightarrow b#bar{b}, ";
-	if(var_axis_=="x") specific_point += "m_{A/H} = " + std::to_string(int(var_point_)) + " GeV";
-	else if(var_axis_ == "z") specific_point += "cos(#beta-#alpha) = " + to_string_with_precision(var_point_, 1);
+      //if(legendHeader.length() > 20) {
+      if(legendHeader.length() > 33) {
+      std::cout<<"Legend header is too long"<<std::endl;
+	std::string specific_point = "#phi#rightarrow b#bar{b}, ";
+      if(var_axis_=="x") specific_point = "#phi#rightarrow b#bar{b}, " + std::string("m_{#lower[-0.25]{H}} ") + std::string("= ") + std::string("m_{A} = ") + std::to_string(int(var_point_)) + " GeV";
+	else if(var_axis_ == "z") specific_point += "cos(#beta #minus #alpha) = " + to_string_with_precision(var_point_, 1);
 	legendHeader += ", " + specific_point;
 	leg.SetHeader(legendHeader.c_str());
 	HbbStyle::drawLegendSplittedHeader(&leg,",");
