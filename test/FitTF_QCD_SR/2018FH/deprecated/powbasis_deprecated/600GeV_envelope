@@ -1,0 +1,5 @@
+
+>>> random number generator seed is 123456
+>>> method used is MultiDimFit
+Turning on runtime-define MINIMIZER_freezeDisassociatedParams
+Setting runtime-define REMOVE_CONSTANT_ZERO_POINT to 1
